@@ -6,15 +6,24 @@ using Util;
 
 public class HeroController : MonoBehaviour
 {
+
+    [Header("Object Properties")]
     public Animator animator;
     public HeroAnimState heroAnimState;
     public SpriteRenderer spriteRenderer;
+
+    [Header("Physics Related")]
     public Transform groundTarget;
     public Rigidbody2D playerRigidBody;
     public bool isGrounded;
-    public AudioSource jumpSound;
     public float jumpForce = 200.0f;
     public Vector2 maximumVelocity = new Vector2(6.0f, 12.0f);
+    public Transform spawnPoint;
+
+    [Header("Sounds")]
+    public AudioSource jumpSound;
+    public AudioSource coinSound;
+
 
     // Start is called before the first frame update
     void Start()
@@ -96,4 +105,22 @@ public class HeroController : MonoBehaviour
                 Mathf.Clamp(playerRigidBody.velocity.y,
                     -maximumVelocity.y, maximumVelocity.y));
     }
+    
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            // update the scoreboard - add points
+            coinSound.Play();
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            // update the scoreboard - add points
+            gameObject.transform.position = spawnPoint.transform.position;
+        }
+    }
+
+
 }

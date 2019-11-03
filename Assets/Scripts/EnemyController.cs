@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
             new Vector2(2.0f, 1.0f), 0.0f,
             Vector2.down, 1.0f,
             1 << LayerMask.NameToLayer("Ground"));
-
+        
         hasGroundAhead = Physics2D.Linecast(
                 transform.position,
                 lookAhead.position,
@@ -62,4 +62,5 @@ public class EnemyController : MonoBehaviour
         }
 
     }
+
 }
